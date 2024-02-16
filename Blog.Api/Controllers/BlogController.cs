@@ -3,9 +3,12 @@ using Blog.Api.Models;
 using Blog.Api.Services.Interfaces;
 using Blog.Api.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Swashbuckle.AspNetCore.Annotations;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Blog.Api.Controllers
@@ -21,6 +24,8 @@ namespace Blog.Api.Controllers
         }
 
         [HttpGet]
+        [SwaggerResponse(StatusCodes.Status200OK)]
+        [SwaggerResponse(StatusCodes.Status401Unauthorized)]
         [Route("dados")]
         [Authorize(Roles = "admin, usuario")]
         public async Task<IActionResult> GetAllAsync()
@@ -30,6 +35,8 @@ namespace Blog.Api.Controllers
         }
 
         [HttpGet]
+        [SwaggerResponse(StatusCodes.Status200OK)]
+        [SwaggerResponse(StatusCodes.Status401Unauthorized)]
         [Route("dados/{id}")]
         [Authorize(Roles = "admin, usuario")]
         public async Task<IActionResult> GetByIdAsync([FromRoute] int id)
@@ -40,6 +47,8 @@ namespace Blog.Api.Controllers
         }
 
         [HttpPost]
+        [SwaggerResponse(StatusCodes.Status201Created)]
+        [SwaggerResponse(StatusCodes.Status401Unauthorized)]
         [Route("dados")]
         [Authorize(Roles = "admin")]
         public async Task<IActionResult> PostAsync([FromBody] CreatePostViewModel post)
@@ -67,6 +76,8 @@ namespace Blog.Api.Controllers
         }
 
         [HttpPut("dados/{id}")]
+        [SwaggerResponse(StatusCodes.Status200OK)]
+        [SwaggerResponse(StatusCodes.Status401Unauthorized)]
         [Authorize(Roles = "admin")]
         public async Task<IActionResult> PutAsync(
             [FromBody] CreatePostViewModel model,
@@ -96,6 +107,8 @@ namespace Blog.Api.Controllers
         }
 
         [HttpDelete("dados/{id}")]
+        [SwaggerResponse(StatusCodes.Status200OK)]
+        [SwaggerResponse(StatusCodes.Status401Unauthorized)]
         [Authorize(Roles = "admin")]
         public async Task<IActionResult> DeleteAsync(
             [FromServices] AppDbContext context,

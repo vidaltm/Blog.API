@@ -67,3 +67,4 @@ C:\Users\Vidal\source\repos\Blog.Api\Blog.Api\bin\Debug\net5.0\Swashbuckle.AspNe
 C:\Users\Vidal\source\repos\Blog.Api\Blog.Api\bin\Debug\net5.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\Vidal\source\repos\Blog.Api\Blog.Api\bin\Debug\net5.0\Swashbuckle.AspNetCore.SwaggerUI.dll
 C:\Users\Vidal\source\repos\Blog.Api\Blog.Api\obj\Debug\net5.0\Blog.Api.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\Vidal\source\repos\Blog.Api\Blog.Api\bin\Debug\net5.0\Swashbuckle.AspNetCore.Annotations.dll
