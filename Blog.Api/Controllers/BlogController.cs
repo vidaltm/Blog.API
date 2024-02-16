@@ -3,18 +3,14 @@ using Blog.Api.Models;
 using Blog.Api.Services.Interfaces;
 using Blog.Api.ViewModels;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Blog.Api.Controllers
 {
     [Route("v1")]
-    [ApiController]
-    [Authorize]
+    [ApiController]    
     public class BlogController : ControllerBase
     {
         private readonly IDadosBlogService _dadosBlogService;
@@ -25,6 +21,7 @@ namespace Blog.Api.Controllers
 
         [HttpGet]
         [Route("dados")]
+        [Authorize(Roles = "admin, usuario")]
         public async Task<IActionResult> GetAllAsync()
         {
             var dadosBlog = await _dadosBlogService.GetAll();
@@ -33,6 +30,7 @@ namespace Blog.Api.Controllers
 
         [HttpGet]
         [Route("dados/{id}")]
+        [Authorize(Roles = "admin, usuario")]
         public async Task<IActionResult> GetByIdAsync([FromRoute] int id)
         {
             var dadoBlog = await _dadosBlogService.GetById(id);
@@ -42,6 +40,7 @@ namespace Blog.Api.Controllers
 
         [HttpPost]
         [Route("dados")]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> PostAsync([FromBody] CreatePostViewModel post)
         {
             if (!ModelState.IsValid)
@@ -60,13 +59,14 @@ namespace Blog.Api.Controllers
 
                 return Created(uri: $"v1/dados/{postBlog.Id}", postBlog);
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
                 return BadRequest();
             }
         }
 
         [HttpPut("dados/{id}")]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> PutAsync(
             [FromBody] CreatePostViewModel model,
             [FromRoute] int id)
@@ -95,6 +95,7 @@ namespace Blog.Api.Controllers
         }
 
         [HttpDelete("dados/{id}")]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> DeleteAsync(
             [FromServices] AppDbContext context,
             [FromRoute] int id)
