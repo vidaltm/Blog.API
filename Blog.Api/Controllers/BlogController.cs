@@ -4,6 +4,7 @@ using Blog.Api.Services.Interfaces;
 using Blog.Api.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using System;
 using System.Threading.Tasks;
 

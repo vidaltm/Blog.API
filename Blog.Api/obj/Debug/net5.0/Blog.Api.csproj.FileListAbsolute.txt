@@ -62,3 +62,8 @@ C:\Users\Vidal\source\repos\Blog.Api\Blog.Api\bin\Debug\net5.0\Microsoft.Identit
 C:\Users\Vidal\source\repos\Blog.Api\Blog.Api\bin\Debug\net5.0\Microsoft.IdentityModel.Tokens.dll
 C:\Users\Vidal\source\repos\Blog.Api\Blog.Api\bin\Debug\net5.0\Newtonsoft.Json.dll
 C:\Users\Vidal\source\repos\Blog.Api\Blog.Api\bin\Debug\net5.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\Vidal\source\repos\Blog.Api\Blog.Api\bin\Debug\net5.0\Microsoft.OpenApi.dll
+C:\Users\Vidal\source\repos\Blog.Api\Blog.Api\bin\Debug\net5.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\Vidal\source\repos\Blog.Api\Blog.Api\bin\Debug\net5.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\Vidal\source\repos\Blog.Api\Blog.Api\bin\Debug\net5.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\Vidal\source\repos\Blog.Api\Blog.Api\obj\Debug\net5.0\Blog.Api.MvcApplicationPartsAssemblyInfo.cs
