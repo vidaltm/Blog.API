@@ -7,16 +7,13 @@ using Blog.Api.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.SignalR;
 
 namespace Blog.Api
 {
@@ -26,12 +23,24 @@ namespace Blog.Api
         {
             services.AddCors();
             services.AddControllers();
+            services.AddSignalR();
+            
             services.AddDbContext<AppDbContext>();
 
             services.AddSingleton<IJwtTokenService, JwtTokenService>();
             services.AddScoped<IDadosBlogService, DadosBlogService>();
             services.AddSingleton<IUsuarioRepository, UsuarioRepository>();
             services.AddScoped<IDadosBlogRepository, DadosBlogRepository>();
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CORSPolicy",
+                    builder => builder
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials()
+                    .SetIsOriginAllowed((hosts) => true));
+            });
 
             var key = Encoding.ASCII.GetBytes(JwtSettings.JwtSecret);
             services.AddAuthentication(x =>
@@ -104,10 +113,7 @@ namespace Blog.Api
 
             app.UseRouting();
 
-            app.UseCors(x => x
-                .AllowAnyOrigin()
-                .AllowAnyMethod()
-                .AllowAnyHeader());
+            app.UseCors("CORSPolicy");
 
             app.UseAuthentication();
             app.UseAuthorization();
@@ -117,13 +123,18 @@ namespace Blog.Api
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+                endpoints.MapHub<MessageHub>("/messages");
             });
+
+            
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/V1/swagger.json", "BLOG");
             });
+            
         }
     }
 }

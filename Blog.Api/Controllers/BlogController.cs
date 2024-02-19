@@ -1,11 +1,13 @@
 ﻿using Blog.Api.Data;
 using Blog.Api.Models;
+using Blog.Api.Services;
 using Blog.Api.Services.Interfaces;
 using Blog.Api.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.AspNetCore.SignalR;
 using Swashbuckle.AspNetCore.Annotations;
 using System;
 using System.Collections.Generic;
@@ -18,9 +20,11 @@ namespace Blog.Api.Controllers
     public class BlogController : ControllerBase
     {
         private readonly IDadosBlogService _dadosBlogService;
-        public BlogController(IDadosBlogService dadosBlogService)
+        private readonly IHubContext<MessageHub, IMessageHubClient> _messageHub;
+        public BlogController(IDadosBlogService dadosBlogService, IHubContext<MessageHub, IMessageHubClient> messageHub)
         {
             _dadosBlogService = dadosBlogService;
+            _messageHub = messageHub;
         }
 
         [HttpGet]
@@ -62,10 +66,12 @@ namespace Blog.Api.Controllers
                 {
                     NomeEditor = post.NomeEditor,
                     Texto = post.Texto,
-                    Done = false
+                    Done = true
                 };
 
                 await _dadosBlogService.Post(postBlog);
+
+                await _messageHub.Clients.All.SendMessageToHub($"Nome Editor: {postBlog.NomeEditor}, Texto: {postBlog.Texto}");
 
                 return Created(uri: $"v1/dados/{postBlog.Id}", postBlog);
             }
