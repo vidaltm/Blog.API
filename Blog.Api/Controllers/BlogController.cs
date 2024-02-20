@@ -116,9 +116,7 @@ namespace Blog.Api.Controllers
         [SwaggerResponse(StatusCodes.Status200OK)]
         [SwaggerResponse(StatusCodes.Status401Unauthorized)]
         [Authorize(Roles = "admin")]
-        public async Task<IActionResult> DeleteAsync(
-            [FromServices] AppDbContext context,
-            [FromRoute] int id)
+        public async Task<IActionResult> DeleteAsync([FromRoute] int id)
         {
             var dadosBlog = await _dadosBlogService.GetById(id);
 
